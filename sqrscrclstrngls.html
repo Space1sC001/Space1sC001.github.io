@@ -13,44 +13,45 @@
     <p>ADD DESCRIPTION HERE</p>
     
     <script type="text/processing">
-    float psx;
-  float psy;
-
-  float pcx;
-  float pcy;
-
-  float ptx1;
-  float pty1;
-  float ptx2;
-  float pty2;
-  float ptx3;
-  float pty3;
-
-  boolean sqrDragged;
-  boolean crclDragged;
-  boolean trnglDragged;
-
-  int totalSqrs = 30;
-  int totalCrcls = 30;
-  int totalTrngl = 30;
-
-  int sqrValue;
-  int sqrIndex;
-
-  int crclValue;
-  int crclIndex;
-
-  IntList collectedSqrs;
-  IntList sqrsValueIndex;
-
-  IntList collectedCrcls;
-  IntList crclsValueIndex;
-
-  Square[] sqrs = new Square[totalSqrs];
-  Circle[] crcls = new Circle[totalCrcls];
-  Triangle[] trngl = new Triangle[totalTrngl];
+    
 
   void setup(){
+    float psx;
+    float psy;
+
+    float pcx;
+    float pcy;
+
+    float ptx1;
+    float pty1;
+    float ptx2;
+    float pty2;
+    float ptx3;
+    float pty3;
+
+    boolean sqrDragged;
+    boolean crclDragged;
+    boolean trnglDragged;
+
+    int totalSqrs = 30;
+    int totalCrcls = 30;
+    int totalTrngl = 30;
+
+    int sqrValue;
+    int sqrIndex;
+
+    int crclValue;
+    int crclIndex;
+
+    IntList collectedSqrs;
+    IntList sqrsValueIndex;
+
+    IntList collectedCrcls;
+    IntList crclsValueIndex;
+
+    Square[] sqrs = new Square[totalSqrs];
+    Circle[] crcls = new Circle[totalCrcls];
+    Triangle[] trngl = new Triangle[totalTrngl];
     size(1000, 1000);
     background(0);
     fill(51, 240, 83);
