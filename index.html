@@ -191,12 +191,12 @@
 
           for(int i = 0; i < totalSqrs; i++){
             sqrIndex = 0;
-            //println("squares: " + i);
+            
             if((sqrs[i].sx >= psx) && (sqrs[i].sx+10 <= psx + 40) && (sqrs[i].sy >= psy) && (sqrs[i].sy+10 <= psy + 40)){
               sqrValue = sqrsValueIndex.get(i);
               while(sqrValue != collectedSqrs.get(sqrIndex)){
                 sqrIndex += 1;      
-                //println(sqrIndex + " " + sqrValue);
+                
               }
               collectedSqrs.remove(sqrIndex);
               sqrs[i].sUpdate();
@@ -209,29 +209,7 @@
           }
 
            for(int i = 0; i < totalCrcls; i++){
-            //crclIndex = 0;
-            //println("circles:" + i);
-             //(crcls[i].cx+10 <= pcx + 40) && (crcls[i].cy >= pcy) && (crcls[i].cy+10 <= pcy + 40)){                  <<
-              /*crclValue = crclsValueIndex.get(i);                                                                      |
-              while(crclValue != collectedCrcls.get(crclIndex) && (crclValue < collectedCrcls.size())){
-                crclIndex += 1; 
-                /*if(crclIndex >= (collectedCrcls.size())){--------------------------------------------original attempt at removing a circle
-                  crclIndex = 0;
-                }
-                println(crclIndex + " " + crclValue);
-                /*if(crclValue == collectedCrcls.get(crclIndex)){
-                  println("index = value");
-
-                }
-              }                                                                                                            |
-              collectedCrcls.remove(crclIndex);                                                                          <<        
-              */
               crcls[i].cUpdate();
-            //}
-            //if(collectedCrcls.hasValue(i)){
-
-
-            //}
           }
 
           for(int i = 0; i < totalTrngl; i++){
