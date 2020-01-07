@@ -7,97 +7,62 @@
       <title>Processing Demo</title>
       <script type="text/javascript" src="js/processing.js"></script>
   </head>
-
+  
   <body>
-    <h1>PUT YOUR easd HR!</h1>
-    <p>ADD asd HERE</p>
-
+    <h1>Granada High Tutorial</h1>
+    <p>Processing demo</p>
+    
     <script type="text/processing">
-
-    int totalDots = 100;
-
-    Dot[] dots = new Dot[totalDots];
-
-
-    color fillColor;
-
-    float diameter = 6.0;
-
-    void setup(){
-      size(500, 500);
-      fillColor = color(255, 0, 0);
-      fill(fillColor);
-      noStroke();
-
-      for(int i = 0; i < totalDots; i++){
-        Dot d = new Dot();
-        d.x = random(width);
-        d.y = random(height);
-        d.vx = random(-1.0,1.0);
-        d.vy = random(-1.0,1.0);
-        dots[i] = d;
+    
+      Ball[] ball;
+      void setup(){
+        size(700, 600);
+        frameRate(100);
+        ball = new Ball[100];
+        for(int i = 0; i < ball.length; i++){
+            ball[i] = new Ball();
+        }
       }
-
-      background(0);
-
-    }
-
-
-    void draw(){
-     fill(0, 10);
-     rect(0, 0, width, height);
-
-     float r = 255;
-     float g = 255;
-     float b = 255;
-
-     for(int i = 0; i < totalDots; i++){
-       r = map(dots[i].x, 0, width, 0, 255);
-       g = map(dots[i].y, 0, height, 0, 255);
-       b = random(r, g);
-       fill(r, g, b);
-       dots[i].update();
-       ellipse(dots[i].x, dots[i].y, diameter, diameter);
-       for(int a = 0; a<totalDots; a++){
-         if(dots[i]!=dots[a]){
-           dots[i].swapVel(dots[a]);
-         }
-       }
-     }
-    }
-    class Dot{
-      float x = 0.0;
-      float y = 0.0;
-      float vx = 0.0;
-      float vy = 0.0;
-
-      void update(){
-        this.vx += random(-1.0,1.0);
-        this.vx *= .96;
-        this.vy += random(-1.0,1.0);
-        this.vy *= .96;
-
-        this.x += this.vx;
-        this.y += this.vy;
-
-        if(this.x > width) {this.x = width; this.vx *= -1.0;}
-        if(this.x < 0) { this.x = 0; this.vx *= -1.0;}
-        if(this.y > height) {this.y = height; this.vy *= -1.0;}
-        if(this.y < 0) { this.y = 0; this.vy *= -1.0;}
+      void draw(){
+          background(155,0,0);
+            for(int i = 0; i < ball.length; i++){
+                ball[i].display();
+            }
       }
-
-      void swapVel(Dot dot2){
-        float tempx = dot2.vx;
-        float tempy = dot2.vy;
-        dot2.vy = this.vy;
-        dot2.vx = this.vx;
-        this.vx = tempx;
-        this.vy = tempy;
-      }
+      class Ball{
+          float x;
+          float y;
+          float Vx;
+          float Vy;
+          float r,g,b,o;
+          float d;
+          Ball(){
+              x = random(width);
+              y = random(height);
+              Vx = random(-5,5);
+              Vy = random(-5,5);
+              r = random(255);
+              g = random(255);
+              b = random(255);
+              o = random(255);
+              d = random(30) + 15;
+          }
+          void display(){
+              fill(r,g,b,o);
+              ellipse(x,y,d,d);
+              x += Vx;
+              y += Vy;
+              if(x > width || x < 0){
+                  Vx *= -1;
+              }
+              if(y > height || y < 0){
+                  Vy *= -1;
+              }
+          }
     }
     </script>
     <canvas id="sketch" style="border: 1px solid black;"></canvas>
-
+    
   </body>
-
-  </html>
+  
+</html>
