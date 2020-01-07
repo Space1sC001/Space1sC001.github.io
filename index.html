@@ -14,118 +14,87 @@
     
     <script type="text/processing">
     
-      Ball[] ballarray;
+      int totalDots = 100;
 
-int redValue;
-int redValueChange;
-public void setup() {
-  strokeWeight(4);
-  stroke(10,0,0);
-  size(1200, 800);   //size of the window
-  background(100, 100, 100);  //creates a gray background
-  ballarray = new Ball[500];
-  for (int i = 0; i < ballarray.length; i++) {
-    ballarray[i] = new Ball();
-  }
+Dot[] dots = new Dot[totalDots];
 
-  redValueChange=1;  //sets the speed of color change of the background
+
+color fillColor;
+
+float diameter = 6.0;
+
+
+void setup(){
+  size(500, 500, FX2D);
+  fillColor = color(255, 0, 0);
+  fill(fillColor);
+  noStroke();
+  
+  for(int i = 0; i < totalDots; i++){
+    Dot d = new Dot();
+    d.x = random(width);
+    d.y = random(height);
+    d.vx = random(-1.0,1.0);
+    d.vy = random(-1.0,1.0);
+    dots[i] = d;
+  }
+  
+  background(0);
+  
 }
-void draw() {
-  if (redValue>255 || redValue<0) {  //at the top and bottom of red spectrum, reverse color change direction
-    redValueChange*=-1;
-  }
-  redValue+=redValueChange;
-  background(redValue, 100, 100);
-  
-  for (int i = 0; i < ballarray.length; i++) {
-    ballarray[i].show(); //move the ball named b
-    ballarray[i].update();    //show the ball named b
-  }
-  
-  for(Ball b1: ballarray){
-    for(Ball b2: ballarray){
-      
-      if(b1 != b2){
-        
-        b1.ballCollision(b2);
-      }
-      
-      
-    }
-    
-  }
-}
-public class Ball{
+
+
+void draw(){
+ fill(0, 10);
+ rect(0, 0, width, height);
  
-  //instance variables
-  float x;
-  float y;
-  float h;
-  float w;
-  float xVel;
-  float yVel;
-  float r,g,b,o;
+ float r = 255;
+ float g = 255;
+ float b = 255;
  
-  //constructor
-  public Ball(){
-    x = width/2;   //left-right middle of the screen
-    y = height/2;   //vertical middle of screen
-    h=random(60);           //height of ball
-    w=h;            //width of ball
-    xVel=random(-10,10);          //speed in horizontal direction
-    yVel=random(-10,10);     //speed in vertical direction
-    r = random(255);
-    g = random(255);
-    b = random(255);
-    o = random(255);
-  }
-  
-  public void show(){
-    ellipse(x,y,w,h);     //draws an ellipse at x,y location, if w=h then a circle is drawn
-    fill(r,g,b,o);
-    
-  }
- 
-  public void update(){
-    x+=xVel;              //updates the ball to a new x and y position
-    y+=yVel;
-    if(x >= width){
-      xVel*=-1;
-      
-    }
-    if(x <= 0){
-      xVel*=-1;
-     
-    }
-    if(y >= height){
-      yVel*=-1;
-     
-    }
-    if(y <= 0){
-      yVel*=-1;
-      
-    }
-  }
- 
- //check for collision with other balls
- public void ballCollision(Ball other){
-   
-   if(sqrt( pow((x - other.x), 2) + pow((y - other.y), 2) ) < ( w/2 + other.w/2 )){
-     
-     xVel*=-1;
-     other.yVel*=-1;
-     fill(other.r, other.g, other.b, other.o);
-     
-     
+ for(int i = 0; i < totalDots; i++){
+   r = map(dots[i].x, 0, width, 0, 255);
+   g = map(dots[i].y, 0, height, 0, 255);
+   b = random(r, g);
+   fill(r, g, b);
+   dots[i].update();
+   ellipse(dots[i].x, dots[i].y, diameter, diameter);
+   for(int a = 0; a<totalDots; a++){
+     if(dots[i]!=dots[a]){
+       dots[i].swapVel(dots[a]);
+     }
    }
-   
  }
-   
+}
+class Dot{
+  float x = 0.0;
+  float y = 0.0;
+  float vx = 0.0;
+  float vy = 0.0;
  
- 
- 
- 
- 
+  void update(){
+    this.vx += random(-1.0,1.0);
+    this.vx *= .96;
+    this.vy += random(-1.0,1.0);
+    this.vy *= .96;
+    
+    this.x += this.vx;
+    this.y += this.vy;
+    
+    if(this.x > width) {this.x = width; this.vx *= -1.0;}
+    if(this.x < 0) { this.x = 0; this.vx *= -1.0;}
+    if(this.y > height) {this.y = height; this.vy *= -1.0;}
+    if(this.y < 0) { this.y = 0; this.vy *= -1.0;}
+  }
+  
+  void swapVel(Dot dot2){
+    float tempx = dot2.vx;
+    float tempy = dot2.vy;
+    dot2.vy = this.vy;
+    dot2.vx = this.vx;
+    this.vx = tempx;
+    this.vy = tempy;
+  }
 }
     </script>
     <canvas id="sketch" style="border: 1px solid black;"></canvas>
