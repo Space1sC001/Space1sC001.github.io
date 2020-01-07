@@ -278,66 +278,28 @@
 
 
 
-    }//1a
+      }//1a
 
-    //------
+      //------
 
-    class Square{//1a
-      float sx;
-      float sy;
-      float sxvel;
-      float syvel;
-      boolean drawMe = true;
+      class Square{//1a
+        float sx;
+        float sy;
+        float sxvel;
+        float syvel;
+        boolean drawMe = true;
 
-      void sUpdate(){//2
-        if((this.sx >= psx) && (this.sx+10 <= psx + 40) && (this.sy >= psy) && (this.sy+10 <= psy + 40)){//3
-          fill(255);
-          rect(this.sx, this.sy, 10, 10);
-          fill(0);
-          this.sx = 0;
-          this.sy = 0;
-
-
-        }//3
-      }//2
+        void sUpdate(){//2
+          if((this.sx >= psx) && (this.sx+10 <= psx + 40) && (this.sy >= psy) && (this.sy+10 <= psy + 40)){//3
+            fill(255);
+            rect(this.sx, this.sy, 10, 10);
+            fill(0);
+            this.sx = 0;
+            this.sy = 0;
 
 
-
-
-
-
-
-
-
-
-    }//1a
-
-    //--------------
-
-    class Triangle{//1a
-      float tx1;
-      float ty1;
-      float tx2;
-      float ty2;
-      float tx3;
-      float ty3;
-      float txvel;
-      float tyvel;
-      boolean drawMe = true;
-
-      void tUpdate(){//2
-        if((this.tx1 >= ptx1) && (this.tx2 <= ptx2) && (this.ty3 >= pty3) && (this.ty2 <= pty2)){//3
-          fill(255);
-          fill(0);
-          drawMe = false;
-        }//3
-        else if(drawMe == true){//4
-          stroke(24, 28, 234);
-          strokeWeight(2);
-          triangle(this.tx1, this.ty1, this.tx2, this.ty2, this.tx3, this.ty3);
-          strokeWeight(5);
-        }//4
-      }//2
+          }//3
+        }//2
 
 
 
@@ -348,9 +310,47 @@
 
 
 
-    }//1a
+      }//1a
 
-   //-----
+      //--------------
+
+      class Triangle{//1a
+        float tx1;
+        float ty1;
+        float tx2;
+        float ty2;
+        float tx3;
+        float ty3;
+        float txvel;
+        float tyvel;
+        boolean drawMe = true;
+
+        void tUpdate(){//2
+          if((this.tx1 >= ptx1) && (this.tx2 <= ptx2) && (this.ty3 >= pty3) && (this.ty2 <= pty2)){//3
+            fill(255);
+            fill(0);
+            drawMe = false;
+          }//3
+          else if(drawMe == true){//4
+            stroke(24, 28, 234);
+            strokeWeight(2);
+            triangle(this.tx1, this.ty1, this.tx2, this.ty2, this.tx3, this.ty3);
+            strokeWeight(5);
+          }//4
+        }//2
+
+
+
+
+
+
+
+
+
+
+      }//1a
+
+     //-----
      
     </script>
     <canvas id="sketch" style="border: 1px solid black;"></canvas>
