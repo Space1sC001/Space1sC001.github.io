@@ -15,327 +15,257 @@
     <script type="text/processing">
     
 
-        void setup(){//1a
-          float psx;
-          float psy;
+      void setup(){//1a
+        float psx;
+        float psy;
 
-          float pcx;
-          float pcy;
+        float pcx;
+        float pcy;
 
-          float ptx1;
-          float pty1;
-          float ptx2;
-          float pty2;
-          float ptx3;
-          float pty3;
+        float ptx1;
+        float pty1;
+        float ptx2;
+        float pty2;
+        float ptx3;
+        float pty3;
 
-          boolean sqrDragged;
-          boolean crclDragged;
-          boolean trnglDragged;
+        boolean sqrDragged;
+        boolean crclDragged;
+        boolean trnglDragged;
 
-          int totalSqrs = 30;
-          int totalCrcls = 30;
-          int totalTrngl = 30;
+        int totalSqrs = 30;
+        int totalCrcls = 30;
+        int totalTrngl = 30;
 
-          int sqrValue;
-          int sqrIndex;
+        int sqrValue;
+        int sqrIndex;
 
-          int crclValue;
-          int crclIndex;
+        int crclValue;
+        int crclIndex;
 
-          IntList collectedSqrs;
-          IntList sqrsValueIndex;
+        IntList collectedSqrs;
+        IntList sqrsValueIndex;
 
-          IntList collectedCrcls;
-          IntList crclsValueIndex;
+        IntList collectedCrcls;
+        IntList crclsValueIndex;
 
-          Square[] sqrs = new Square[totalSqrs];
-          Circle[] crcls = new Circle[totalCrcls];
-          Triangle[] trngl = new Triangle[totalTrngl];
-          size(1000, 1000);
-          background(0);
+        Square[] sqrs = new Square[totalSqrs];
+        Circle[] crcls = new Circle[totalCrcls];
+        Triangle[] trngl = new Triangle[totalTrngl];
+        size(1000, 1000);
+        background(0);
+        fill(51, 240, 83);
+        rect(50, 50, 900, 900);
+        fill(0);
+        rect(60, 60, 880, 880);
+        fill(0);
+        stroke(51, 240, 83);
+        strokeWeight(5);
+        rect(width/2, height/2, 40, 40);
+
+        psx = 500;
+        psy = 500;
+        pcx = psx + 100;
+        pcy = psy + 20;
+
+        ptx1 = 410;//bottom left point x
+        pty1 = psy + 40;//bottom left point y
+        ptx2 = ptx1 + 52;//bottom right point x
+        pty2 = pty1;//bottom right point y
+        ptx3 = ptx1 + 52/2;//top point x
+        pty3 = pty1 - 40;//top point y  
+
+        smooth();
+
+        sqrDragged = false;
+        crclDragged = false;
+        trnglDragged = false;
+
+        collectedSqrs = new IntList();
+        sqrsValueIndex = new IntList();
+
+        for(int i = 0; i < totalSqrs; i++){//2a
+          Square s = new Square();
           fill(51, 240, 83);
-          rect(50, 50, 900, 900);
-          fill(0);
-          rect(60, 60, 880, 880);
-          fill(0);
-          stroke(51, 240, 83);
-          strokeWeight(5);
-          rect(width/2, height/2, 40, 40);
+          s.sx = random(80, 860);
+          s.sy = random(80, 860);
+          while((s.sx >= 400) && (s.sx <= 650) && (s.sy >= 450) && (s.sy <= 550)){//3a
+            if((s.sx >= 400) && (s.sx <= 650)){//4a
+              s.sx = random(80, 860);
+            }//4a
+            if((s.sy >= 450) && (s.sy <= 550)){//4b
+              s.sy = random(80, 860);
+            }//4b
+          }//3a
+          sqrs[i] = s;
 
-          psx = 500;
-          psy = 500;
-          pcx = psx + 100;
-          pcy = psy + 20;
+          collectedSqrs.append(i);
+          sqrsValueIndex.append(i);
+        }//2a
 
-          ptx1 = 410;//bottom left point x
-          pty1 = psy + 40;//bottom left point y
-          ptx2 = ptx1 + 52;//bottom right point x
-          pty2 = pty1;//bottom right point y
-          ptx3 = ptx1 + 52/2;//top point x
-          pty3 = pty1 - 40;//top point y  
+        collectedCrcls = new IntList();
+        crclsValueIndex = new IntList();
 
-          smooth();
+        for(int i = 0; i < totalCrcls; i++){//2b
+          Circle c = new Circle();
+          fill(234, 21, 21);
+          c.cx = random(80, 860);
+          c.cy = random(80, 860);
 
-          sqrDragged = false;
-          crclDragged = false;
-          trnglDragged = false;
+          while((c.cx >= 400) && (c.cx <= 650) && (c.cy >= 450) && (c.cy <= 550)){//3b
+            if((c.cx >= 400) && (c.cx <= 650)){//4c
+              c.cx = random(80, 860);
+            }//4c
+            if((c.cy >= 450) && (c.cy <= 550)){//4d
+              c.cy = random(80, 860);
+            }//4d
+          }//3b
 
-          collectedSqrs = new IntList();
-          sqrsValueIndex = new IntList();
+          crcls[i] = c;
 
-          for(int i = 0; i < totalSqrs; i++){//2a
-            Square s = new Square();
-            fill(51, 240, 83);
-            s.sx = random(80, 860);
-            s.sy = random(80, 860);
-            while((s.sx >= 400) && (s.sx <= 650) && (s.sy >= 450) && (s.sy <= 550)){//3a
-              if((s.sx >= 400) && (s.sx <= 650)){//4a
-                s.sx = random(80, 860);
-              }//4a
-              if((s.sy >= 450) && (s.sy <= 550)){//4b
-                s.sy = random(80, 860);
-              }//4b
-            }//3a
-            sqrs[i] = s;
+          collectedCrcls.append(i);
+          crclsValueIndex.append(i);
+        }//2b
 
-            collectedSqrs.append(i);
-            sqrsValueIndex.append(i);
-          }//2a
+        for(int i = 0; i < totalTrngl; i++){//2c
+          Triangle t = new Triangle();
+          fill(234, 21, 21);
+          t.tx1 = random(80, 860);
+          t.ty1 = random(80, 860);
 
-          collectedCrcls = new IntList();
-          crclsValueIndex = new IntList();
+          while((t.tx1 >= 380) && (t.tx1 <= 680) && (t.ty1 >= 450) && (t.ty1 <= 600)){//3c
+            if((t.tx1 >= 380) && (t.tx1 <= 680)){//4e
+              t.tx1 = random(80, 860);
+            }//4e
+            if((t.ty1 >= 450) && (t.ty1 <= 600)){//4f
+             t.ty1 = random(80, 860);
+            }//4f
+          }//3c
 
-          for(int i = 0; i < totalCrcls; i++){//2b
-            Circle c = new Circle();
-            fill(234, 21, 21);
-            c.cx = random(80, 860);
-            c.cy = random(80, 860);
+          t.tx2 = t.tx1 + 20;//bottom right point x
+          t.ty2 = t.ty1;//bottom right point y
+          t.tx3 = t.tx1 + 10;//top point x
+          t.ty3 = t.ty1 - 10;//top point y
 
-            while((c.cx >= 400) && (c.cx <= 650) && (c.cy >= 450) && (c.cy <= 550)){//3b
-              if((c.cx >= 400) && (c.cx <= 650)){//4c
-                c.cx = random(80, 860);
-              }//4c
-              if((c.cy >= 450) && (c.cy <= 550)){//4d
-                c.cy = random(80, 860);
-              }//4d
-            }//3b
-
-            crcls[i] = c;
-
-            collectedCrcls.append(i);
-            crclsValueIndex.append(i);
-          }//2b
-
-          for(int i = 0; i < totalTrngl; i++){//2c
-            Triangle t = new Triangle();
-            fill(234, 21, 21);
-            t.tx1 = random(80, 860);
-            t.ty1 = random(80, 860);
-
-            while((t.tx1 >= 380) && (t.tx1 <= 680) && (t.ty1 >= 450) && (t.ty1 <= 600)){//3c
-              if((t.tx1 >= 380) && (t.tx1 <= 680)){//4e
-                t.tx1 = random(80, 860);
-              }//4e
-              if((t.ty1 >= 450) && (t.ty1 <= 600)){//4f
-               t.ty1 = random(80, 860);
-              }//4f
-            }//3c
-
-            t.tx2 = t.tx1 + 20;//bottom right point x
-            t.ty2 = t.ty1;//bottom right point y
-            t.tx3 = t.tx1 + 10;//top point x
-            t.ty3 = t.ty1 - 10;//top point y
-
-            trngl[i] = t;
-          }//2c
-        }//1a
-
-        void draw(){//1b
-
-          if(sqrDragged){//2d
-            psx = mouseX - 20;
-            psy = mouseY - 20;
-          }//2d
-          else if(crclDragged){//2e
-            pcx = mouseX;
-            pcy = mouseY;
-          }//2e
-          else if(trnglDragged){//2f
-            ptx1 = mouseX - 26;
-            pty1 = mouseY + 20;
-          }//2f
-          stroke(51, 240, 83);
-          background(0);
-          fill(51, 240, 83);
-          rect(50, 50, 900, 900);
-          fill(0);
-          rect(60, 60, 880, 880);
-          fill(0);
-
-          strokeWeight(5);
-          rect(psx, psy, 40, 40); //player square
-          stroke(234, 21, 21);
-          ellipse(pcx, pcy, 45, 45); //player circle
-          stroke(51, 240, 83);
-
-          stroke(24, 28, 234);
-          triangle(ptx1, pty1, ptx2, pty2, ptx3, pty3);
-
-          stroke(51, 240, 83);
-
-          ptx2 = ptx1 + 52;//bottom right point x
-          pty2 = pty1;//bottom right point y
-          ptx3 = ptx1 + 52/2;//top point x
-          pty3 = pty1 - 40;//top point y  
-
-          for(int i = 0; i < totalSqrs; i++){//2g
-            sqrIndex = 0;
-            
-            if((sqrs[i].sx >= psx) && (sqrs[i].sx+10 <= psx + 40) && (sqrs[i].sy >= psy) && (sqrs[i].sy+10 <= psy + 40)){//3d
-              sqrValue = sqrsValueIndex.get(i);
-              while(sqrValue != collectedSqrs.get(sqrIndex)){//4g
-                sqrIndex += 1;      
-                
-              }//4g
-              collectedSqrs.remove(sqrIndex);
-              sqrs[i].sUpdate();
-            }//3d
-            if(collectedSqrs.hasValue(i)){//3e
-              stroke(51, 240, 83);
-              rect(sqrs[i].sx, sqrs[i].sy, 10, 10);
-
-            }//3d
-          }//2g
-
-           for(int i = 0; i < totalCrcls; i++){//2h
-              crcls[i].cUpdate();
-          }//2h
-
-          for(int i = 0; i < totalTrngl; i++){//2i
-            trngl[i].tUpdate();
-
-          }//2i
-
-
-
-        }//1b
-//------------
-        void mouseClicked(){//1a
-          if((mouseX >= psx) && (mouseX <= psx + 40) && (mouseY >= psy) && (mouseY <= psy + 40) && (sqrDragged == false)){//2
-            sqrDragged = true;
-          }//2
-
-          else if(sqrDragged == true){//3
-            sqrDragged = false;
-          }//3
-
-          if((sqrt( pow((pcx - mouseX), 2) + pow((pcy - mouseY), 2)) <= (22.5)) && crclDragged == false){//(mouseX >= pcx) && (mouseX <= pcx) && (mouseY >= pcy) && (mouseY <= pcy + 40) && (crclDragged == false)){//4
-            crclDragged = true;
-          }//4
-
-          else if(crclDragged == true){//5
-            crclDragged = false;
-          }//5
-
-          if((mouseX >= ptx1) && (mouseX <= ptx2) && (mouseY >= pty3) && (mouseY <= pty1) && (trnglDragged == false)){//(mouseX >= pcx) && (mouseX <= pcx) && (mouseY >= pcy) && (mouseY <= pcy + 40) && (crclDragged == false)){//6
-            trnglDragged = true;
-          }//6
-
-          else if(trnglDragged == true){//7
-            trnglDragged = false;
-          }//7
-        }//1a
-        
-        //---------
-        
-        class Circle{//1a
-          float cx;
-          float cy;
-          float cxvel;
-          float cyvel;
-          boolean drawMe = true;
-
-          void cUpdate(){//2
-            if(sqrt(pow((pcx - this.cx), 2) + pow((pcy - this.cy), 2)) < (22.5 + 5)){//3
-              fill(255);
-              fill(0);
-              drawMe = false;
-            }//3
-            else if(drawMe == true){//4
-              stroke(234, 21, 21);
-              ellipse(this.cx, this.cy, 10, 10);  
-
-            }//4
-          }//2
-
-
-
-
-
-
-
-
-
-
+          trngl[i] = t;
+        }//2c
       }//1a
-      
-      //------
-      
-      class Square{//1a
-        float sx;
-        float sy;
-        float sxvel;
-        float syvel;
-        boolean drawMe = true;
 
-        void sUpdate(){//2
-          if((this.sx >= psx) && (this.sx+10 <= psx + 40) && (this.sy >= psy) && (this.sy+10 <= psy + 40)){//3
-            fill(255);
-            rect(this.sx, this.sy, 10, 10);
-            fill(0);
-            this.sx = 0;
-            this.sy = 0;
+      void draw(){//1b
+
+        if(sqrDragged){//2d
+          psx = mouseX - 20;
+          psy = mouseY - 20;
+        }//2d
+        else if(crclDragged){//2e
+          pcx = mouseX;
+          pcy = mouseY;
+        }//2e
+        else if(trnglDragged){//2f
+          ptx1 = mouseX - 26;
+          pty1 = mouseY + 20;
+        }//2f
+        stroke(51, 240, 83);
+        background(0);
+        fill(51, 240, 83);
+        rect(50, 50, 900, 900);
+        fill(0);
+        rect(60, 60, 880, 880);
+        fill(0);
+
+        strokeWeight(5);
+        rect(psx, psy, 40, 40); //player square
+        stroke(234, 21, 21);
+        ellipse(pcx, pcy, 45, 45); //player circle
+        stroke(51, 240, 83);
+
+        stroke(24, 28, 234);
+        triangle(ptx1, pty1, ptx2, pty2, ptx3, pty3);
+
+        stroke(51, 240, 83);
+
+        ptx2 = ptx1 + 52;//bottom right point x
+        pty2 = pty1;//bottom right point y
+        ptx3 = ptx1 + 52/2;//top point x
+        pty3 = pty1 - 40;//top point y  
+
+        for(int i = 0; i < totalSqrs; i++){//2g
+          sqrIndex = 0;
+
+          if((sqrs[i].sx >= psx) && (sqrs[i].sx+10 <= psx + 40) && (sqrs[i].sy >= psy) && (sqrs[i].sy+10 <= psy + 40)){//3d
+            sqrValue = sqrsValueIndex.get(i);
+            while(sqrValue != collectedSqrs.get(sqrIndex)){//4g
+              sqrIndex += 1;      
+
+            }//4g
+            collectedSqrs.remove(sqrIndex);
+            sqrs[i].sUpdate();
+          }//3d
+          if(collectedSqrs.hasValue(i)){//3e
+            stroke(51, 240, 83);
+            rect(sqrs[i].sx, sqrs[i].sy, 10, 10);
+
+          }//3d
+        }//2g
+
+         for(int i = 0; i < totalCrcls; i++){//2h
+            crcls[i].cUpdate();
+        }//2h
+
+        for(int i = 0; i < totalTrngl; i++){//2i
+          trngl[i].tUpdate();
+
+        }//2i
 
 
-          }//3
+
+      }//1b
+//------------
+      void mouseClicked(){//1a
+        if((mouseX >= psx) && (mouseX <= psx + 40) && (mouseY >= psy) && (mouseY <= psy + 40) && (sqrDragged == false)){//2
+          sqrDragged = true;
         }//2
 
+        else if(sqrDragged == true){//3
+          sqrDragged = false;
+        }//3
 
+        if((sqrt( pow((pcx - mouseX), 2) + pow((pcy - mouseY), 2)) <= (22.5)) && crclDragged == false){//(mouseX >= pcx) && (mouseX <= pcx) && (mouseY >= pcy) && (mouseY <= pcy + 40) && (crclDragged == false)){//4
+          crclDragged = true;
+        }//4
 
+        else if(crclDragged == true){//5
+          crclDragged = false;
+        }//5
 
+        if((mouseX >= ptx1) && (mouseX <= ptx2) && (mouseY >= pty3) && (mouseY <= pty1) && (trnglDragged == false)){//(mouseX >= pcx) && (mouseX <= pcx) && (mouseY >= pcy) && (mouseY <= pcy + 40) && (crclDragged == false)){//6
+          trnglDragged = true;
+        }//6
 
-
-
-
-
-
+        else if(trnglDragged == true){//7
+          trnglDragged = false;
+        }//7
       }//1a
-      
-      //--------------
-      
-      class Triangle{//1a
-        float tx1;
-        float ty1;
-        float tx2;
-        float ty2;
-        float tx3;
-        float ty3;
-        float txvel;
-        float tyvel;
+
+      //---------
+
+      class Circle{//1a
+        float cx;
+        float cy;
+        float cxvel;
+        float cyvel;
         boolean drawMe = true;
 
-        void tUpdate(){//2
-          if((this.tx1 >= ptx1) && (this.tx2 <= ptx2) && (this.ty3 >= pty3) && (this.ty2 <= pty2)){//3
+        void cUpdate(){//2
+          if(sqrt(pow((pcx - this.cx), 2) + pow((pcy - this.cy), 2)) < (22.5 + 5)){//3
             fill(255);
             fill(0);
             drawMe = false;
           }//3
           else if(drawMe == true){//4
-            stroke(24, 28, 234);
-            strokeWeight(2);
-            triangle(this.tx1, this.ty1, this.tx2, this.ty2, this.tx3, this.ty3);
-            strokeWeight(5);
+            stroke(234, 21, 21);
+            ellipse(this.cx, this.cy, 10, 10);  
+
           }//4
         }//2
 
@@ -348,9 +278,79 @@
 
 
 
-      }//1a
-     
-     //-----
+    }//1a
+
+    //------
+
+    class Square{//1a
+      float sx;
+      float sy;
+      float sxvel;
+      float syvel;
+      boolean drawMe = true;
+
+      void sUpdate(){//2
+        if((this.sx >= psx) && (this.sx+10 <= psx + 40) && (this.sy >= psy) && (this.sy+10 <= psy + 40)){//3
+          fill(255);
+          rect(this.sx, this.sy, 10, 10);
+          fill(0);
+          this.sx = 0;
+          this.sy = 0;
+
+
+        }//3
+      }//2
+
+
+
+
+
+
+
+
+
+
+    }//1a
+
+    //--------------
+
+    class Triangle{//1a
+      float tx1;
+      float ty1;
+      float tx2;
+      float ty2;
+      float tx3;
+      float ty3;
+      float txvel;
+      float tyvel;
+      boolean drawMe = true;
+
+      void tUpdate(){//2
+        if((this.tx1 >= ptx1) && (this.tx2 <= ptx2) && (this.ty3 >= pty3) && (this.ty2 <= pty2)){//3
+          fill(255);
+          fill(0);
+          drawMe = false;
+        }//3
+        else if(drawMe == true){//4
+          stroke(24, 28, 234);
+          strokeWeight(2);
+          triangle(this.tx1, this.ty1, this.tx2, this.ty2, this.tx3, this.ty3);
+          strokeWeight(5);
+        }//4
+      }//2
+
+
+
+
+
+
+
+
+
+
+    }//1a
+
+   //-----
      
     </script>
     <canvas id="sketch" style="border: 1px solid black;"></canvas>
