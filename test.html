@@ -1,0 +1,135 @@
+<!Doctype: HTML w/ Processing>
+
+<html>
+
+  <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <title>Processing Demo</title>
+      <script type="text/javascript" src="js/processing.js"></script>
+  </head>
+  
+  <body>
+    <h1>PUT YOUR TITLE HERE</h1>
+    <p>ADD DESCRIPTION HERE</p>
+    
+    <script type="text/processing">
+    
+      Ball[] ballarray;
+
+int redValue;
+int redValueChange;
+public void setup() {
+  strokeWeight(4);
+  stroke(10,0,0);
+  size(1200, 800);   //size of the window
+  background(100, 100, 100);  //creates a gray background
+  ballarray = new Ball[500];
+  for (int i = 0; i < ballarray.length; i++) {
+    ballarray[i] = new Ball();
+  }
+
+  redValueChange=1;  //sets the speed of color change of the background
+}
+void draw() {
+  if (redValue>255 || redValue<0) {  //at the top and bottom of red spectrum, reverse color change direction
+    redValueChange*=-1;
+  }
+  redValue+=redValueChange;
+  background(redValue, 100, 100);
+  
+  for (int i = 0; i < ballarray.length; i++) {
+    ballarray[i].show(); //move the ball named b
+    ballarray[i].update();    //show the ball named b
+  }
+  
+  for(Ball b1: ballarray){
+    for(Ball b2: ballarray){
+      
+      if(b1 != b2){
+        
+        b1.ballCollision(b2);
+      }
+      
+      
+    }
+    
+  }
+}
+public class Ball{
+ 
+  //instance variables
+  float x;
+  float y;
+  float h;
+  float w;
+  float xVel;
+  float yVel;
+  float r,g,b,o;
+ 
+  //constructor
+  public Ball(){
+    x = width/2;   //left-right middle of the screen
+    y = height/2;   //vertical middle of screen
+    h=random(60);           //height of ball
+    w=h;            //width of ball
+    xVel=random(-10,10);          //speed in horizontal direction
+    yVel=random(-10,10);     //speed in vertical direction
+    r = random(255);
+    g = random(255);
+    b = random(255);
+    o = random(255);
+  }
+  
+  public void show(){
+    ellipse(x,y,w,h);     //draws an ellipse at x,y location, if w=h then a circle is drawn
+    fill(r,g,b,o);
+    
+  }
+ 
+  public void update(){
+    x+=xVel;              //updates the ball to a new x and y position
+    y+=yVel;
+    if(x >= width){
+      xVel*=-1;
+      
+    }
+    if(x <= 0){
+      xVel*=-1;
+     
+    }
+    if(y >= height){
+      yVel*=-1;
+     
+    }
+    if(y <= 0){
+      yVel*=-1;
+      
+    }
+  }
+ 
+ //check for collision with other balls
+ public void ballCollision(Ball other){
+   
+   if(sqrt( pow((x - other.x), 2) + pow((y - other.y), 2) ) < ( w/2 + other.w/2 )){
+     
+     xVel*=-1;
+     other.yVel*=-1;
+     fill(other.r, other.g, other.b, other.o);
+     
+     
+   }
+   
+ }
+   
+ 
+ 
+ 
+ 
+ 
+}
+    </script>
+    <canvas id="sketch" style="border: 1px solid black;"></canvas>
+    
+  </body>
+  
+</html>
