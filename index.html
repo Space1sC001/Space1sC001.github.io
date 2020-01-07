@@ -23,12 +23,14 @@ color fillColor;
 
 float diameter = 6.0;
 
-
-void setup(){
+void settings(){
   size(500, 500, FX2D);
   fillColor = color(255, 0, 0);
   fill(fillColor);
   noStroke();
+  }
+void setup(){
+  
   
   for(int i = 0; i < totalDots; i++){
     Dot d = new Dot();
